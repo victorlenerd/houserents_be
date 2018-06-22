@@ -3,7 +3,7 @@ import pickle
 import pandas as pd
 import math
 
-model = pickle.load(open('./model/model.pkl', 'rb'))
+model = pickle.load(open('./model.pkl', 'rb'))
 app = Flask(__name__)
 
 @app.route('/')
