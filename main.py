@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, jsonify
+from flask_cors import CORS
 import pickle
 import pandas as pd
 import math
@@ -7,12 +8,8 @@ import math
 df = pd.read_csv('./data.csv')
 model = pickle.load(open('./model.pkl', 'rb'))
 app = Flask(__name__)
-
-@app.route('/')
-def home():
+CORS(app)
       
-
-
 @app.route('/predict')
 def predict():
     lng = request.args['lng']
@@ -42,8 +39,8 @@ def range():
     no_bath = request.args['no_bath']
     no_toilets = request.args['no_toilets']
 
-    high = df[(df['lng'] == float(lng)) | (df['lat'] == float(lat)) | (df['no_bath'] == int(no_bath)) | (df['no_bed'] == int(no_bed)) | (df['no_toilets'] == int(no_toilets))]['price'].quantile(0.75)
-    low = df[(df['lng'] == float(lng)) | (df['lat'] == float(lat)) | (df['no_bath'] == int(no_bath)) | (df['no_bed'] == int(no_bed)) | (df['no_toilets'] == int(no_toilets))]['price'].quantile(0.25)
+    high = df[(df['lng'] == float(lng)) | (df['lat'] <= float(lat)) | (df['no_bath'] <= int(no_bath)) | (df['no_bed'] <= int(no_bed)) | (df['no_toilets'] <= int(no_toilets))]['price'].quantile(0.75)
+    low = df[(df['lng'] == float(lng)) | (df['lat'] <= float(lat)) | (df['no_bath'] <= int(no_bath)) | (df['no_bed'] <= int(no_bed)) | (df['no_toilets'] <= int(no_toilets))]['price'].quantile(0.25)
     
     return jsonify(low=low, high=high)
 

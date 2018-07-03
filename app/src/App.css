@@ -1,3 +1,8 @@
+ul {
+  padding: 0px;
+  margin: 0px;
+}
+
 .header {
   width: 100%;
   background-color: #ECF0F1;
@@ -148,24 +153,6 @@
   margin-top: 20px;
 }
 
-
-@media only screen and (max-width: 999px) { 
-  .header h1 {
-    font-size: 26px; 
-  }
-}
-
-@media only screen and (max-width: 768px) { 
-  .footer-right {
-    justify-content: flex-start;
-    margin-top: 20px;
-  }
-
-  .inner-pane h5, .source { 
-    text-align: left
-  }
-}
-
 section {
   padding: 50px 0px;
 }
@@ -179,8 +166,109 @@ h2 {
   font-family: 'Playfair Display', serif;
 }
 
+.input-container {
+  display: table;
+  margin-top: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 5px solid #ECF0F1;
+  box-shadow: 0 5px 15px 1px rgba(0,0,0,0.14);
+}
+
+.input-container > div:nth-child(1) {
+  border-left: none; 
+}
+
+.input-container > div {
+  border-left: 2px solid #ECF0F1;
+}
+
+.input-container select {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.input-container input {
+  width: 100%;
+
+  margin-bottom: 10px;
+  border: 0px;
+  border-bottom: 1px solid #333;
+}
+
+.input-label {
+  color: rgba(0,0,0,0.5);
+  font-family:  'Archivo', sans-serif;
+  font-size: 12px;
+}
+
+.areas-list li {
+  padding: 20px;
+  border-bottom: 2px solid #ECF0F1;
+  font-family:  'Archivo', sans-serif;
+  font-size: 18px;
+}
+
+.areas-list li:last-child {
+  border-bottom: none;
+}
+
+.price {
+  font-weight: 800;
+  float: right;
+  color: #2BE6A8;
+  font-family:  'Archivo', sans-serif;
+
+}
+
+.map {
+  width: 100%;
+  height: 300px;
+  margin-top: -20px;
+}
+
+@media only screen and (max-width: 999px) { 
+  .header h1 {
+    font-size: 26px; 
+  }
+}
+
+@media only screen and (max-width: 799px) {
+  .areas-list li {
+    font-size: 14px;
+  }
+
+  .input-container > div {
+    border-left: none;
+    border-bottom: 2px solid #ECF0F1;
+    margin-bottom: 10px;
+  }
+  
+  .footer-right {
+    justify-content: flex-start;
+    margin-top: 20px;
+  }
+
+  .inner-pane h5, .source { 
+    text-align: left
+  }
+
+  .price {
+    float: none;
+  }
+
+  /* .input-container input {
+    margin-top: 0px;
+    margin-bottom: 15px;
+  } */
+}
 
 @media only screen and (max-width: 380px) { 
+  .areas-list li {
+    font-size: 14px;
+  }
+
   .footer-right {
     justify-content: flex-start;
     margin-top: 20px;
