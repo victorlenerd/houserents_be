@@ -3,10 +3,6 @@ export default () => [{
         "lat": 6.6503,
         "lng": 3.2860
     }, {
-        "name": "Agbara-Igbesa",
-        "lat": 6.52861,
-        "lng": 3.135309
-    }, {
         "name": "Agege",
         "lat": 6.615356,
         "lng": 3.323782
@@ -14,15 +10,6 @@ export default () => [{
         "name": "Ajah",
         "lat": 6.472516,
         "lng": 3.568616
-    },
-    {
-        "name": "Ajaokuta",
-        "lat": 7.558791,
-        "lng": 6.60178
-    }, {
-        "name": "Alagbado",
-        "lat": 6.65844,
-        "lng": 3.263392
     }, {
         "name": "Alimosho",
         "lat": 6.546609,
@@ -36,25 +23,9 @@ export default () => [{
         "lat": 6.444641,
         "lng": 3.364084
     }, {
-        "name": "Atlantic City",
-        "lat": 6.444116,
-        "lng": 3.372984
-    }, {
-        "name": "Badagry",
-        "lat": 6.431581,
-        "lng": 2.887644
-    }, {
-        "name": "Ebute Metta",
-        "lat": 6.484464,
-        "lng": 3.376685
-    }, {
         "name": "Egbe Idimu",
         "lat": 6.564985,
         "lng": 3.280998
-    }, {
-        "name": "Egbeda",
-        "lat": 6.591574,
-        "lng": 3.291062
     }, {
         "name": "Ejigbo",
         "lat": 6.55158,
@@ -68,259 +39,133 @@ export default () => [{
         "lat": 6.561638,
         "lng": 3.384247
     }, {
-        "name": "Ijaiye",
-        "lat": 6.623306,
-        "lng": 3.331337
-    }, {
-        "name": "Ijede",
-        "lat": 6.570825,
-        "lng": 3.596457
-    }, {
         "name": "Ibeju Lekki",
-
         "lat": 6.496267,
         "lng": 3.596457
-
-    }, {
-        "name": "Idi Araba",
-
-        "lat": 6.517865,
-        "lng": 3.357785
-
-    }, {
+    },{
         "name": "Idimu",
-
         "lat": 6.583887,
         "lng": 3.243278
-
     }, {
         "name": "Iganmu",
-
         "lat": 6.484631,
         "lng": 3.351486
-
     }, {
         "name": "Iju",
-
         "lat": 6.64974,
         "lng": 3.323318
-
     }, {
         "name": "Ijaiye",
-
         "lat": 6.623306,
         "lng": 3.331337
-
     }, {
         "name": "Ikeja",
-
         "lat": 6.601838,
         "lng": 3.351486
-
     }, {
         "name": "Ikorodu",
-
         "lat": 6.619413,
         "lng": 3.510454
-
-    }, {
-        "name": "Ikotun",
-
-        "lat": 6.562564,
-        "lng": 3.243278
-
-    }, {
+    },{
         "name": "Ikotun Igando",
-
         "lat": 6.562564,
         "lng": 3.243278
-
     }, {
         "name": "Ikoyi",
-
         "lat": 6.45,
         "lng": 3.433333
-
     }, {
         "name": "Ilaje",
-
         "lat": 6.531235,
         "lng": 3.394971
-
     }, {
         "name": "Ilashe",
-
         "lat": 6.4042593,
         "lng": 3.295804
-
     }, {
         "name": "Ilupeju",
-
         "lat": 6.553648,
         "lng": 3.356674
-
     }, {
         "name": "Ipaja",
-
         "lat": 6.61307,
         "lng": 3.265907
-
-    }, {
-        "name": "Isheri",
-
-        "lat": 6.639043,
-        "lng": 3.361598
-
     }, {
         "name": "Isolo",
-
         "lat": 6.535498,
         "lng": 3.308678
-
-    }, {
-        "name": "Imota",
-
-        "lat": 6.663608,
-        "lng": 3.669929
-
-    }, {
-        "name": "Itire",
-
-        "lat": 6.506057,
-        "lng": 3.331337
-
     }, {
         "name": "Ketu",
-
         "lat": 6.596235,
         "lng": 3.391811
-
-    }, {
-        "name": "Kosofe",
-
-        "lat": 6.598781,
-        "lng": 3.409463
-
     }, {
         "name": "Kosofe Ikosi",
-
         "lat": 6.60068,
         "lng": 3.383047
-
     }, {
         "name": "Lagos Island",
-
         "lat": 6.4549,
         "lng": 3.4246
-
     }, {
         "name": "Lekki",
-
         "lat": 6.4698,
         "lng": 3.5852
-
-    }, {
-        "name": "Magodo",
-
-        "lat": 6.617909,
-        "lng": 400106
-
     }, {
         "name": "Maryland",
-
         "lat": 6.576421,
         "lng": 3.365344
-
     }, {
         "name": "Mushin",
-
         "lat": 6.5352,
         "lng": 3.3490
-
     }, {
         "name": "Ogba",
-
         "lat": 6.6232,
         "lng": 3.3464
-
     }, {
         "name": "Ogudu",
-
         "lat": 6.5749,
         "lng": 3.3918
-
-    }, {
-        "name": "Ojo",
-
-        "lat": 6.4619,
-        "lng": 3.1579
-
     }, {
         "name": "Ojodu",
-
         "lat": 6.6337,
         "lng": 3.3573
-
     }, {
         "name": "Ojota",
-
         "lat": 6.5856,
         "lng": 3.3817
-
-    }, {
-        "name": "Oke Odo",
-
-        "lat": 6.6263,
-        "lng": 3.2835
-
     }, {
         "name": "Okota",
-
         "lat": 6.5088,
         "lng": 3.3137
-
     }, {
         "name": "Orile",
-
         "lat": 6.4780,
         "lng": 3.3427
-
     }, {
         "name": "Oshodi",
-
         "lat": 6.5355,
         "lng": 3.3087
-
     }, {
         "name": "Sangotedo",
-
         "lat": 6.4535,
         "lng": 3.6268
-
     }, {
         "name": "Shomolu",
-
         "lat": 6.5350,
         "lng": 3.3893
-
     },
     {
         "name": "Surulere",
-
         "lat": 6.4926,
         "lng": 3.3490
-
     }, {
         "name": "Victoria Island",
-
         "lat": 6.4281,
         "lng": 3.4219
-
     }, {
         "name": "Yaba",
-
         "lat": 6.5005,
         "lng": 3.3666
-
     }
 ]
