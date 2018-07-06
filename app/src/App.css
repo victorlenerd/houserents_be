@@ -21,6 +21,18 @@ ul {
   margin: 0px;
 }
 
+.hint {
+  font-size: 16px;
+  text-align: 'center';
+  width: 260px;
+  margin: 0px auto;
+}
+
+.toggle-label {
+  display: block;
+  margin-top: 5px;
+}
+
 .header {
   width: 100%;
   background-color: #ECF0F1;
@@ -32,8 +44,9 @@ ul {
   overflow: hidden;
   background-attachment: fixed;
   background-image: url('./img/unsplash.jpg');
-  background-position: center 500px;
+  background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .header-overlay {

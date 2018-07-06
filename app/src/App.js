@@ -9,10 +9,11 @@ import Map from './components/map';
 import Filter from './components/filter';
 
 import Areas from './areas';
+
+import Predict from './utils/predict';
 import Toggle from 'react-toggle';
 
 import $ from 'jquery';
-import * as tf from '@tensorflow/tfjs';
 
 class App extends Component {
 
@@ -20,13 +21,13 @@ class App extends Component {
     super(props);
     
     this.state = {
-      nobed: 1,
-      nobath: 1,
-      notoilets: 1,
+      no_bed: 1,
+      no_bath: 1,
+      no_toilets: 1,
 
-      tnobed: 1,
-      tnobath: 1,
-      tnotoilets: 1,
+      tno_bed: 1,
+      tno_bath: 1,
+      tno_toilets: 1,
 
       currentArea: {
         lat: 6.5005,
@@ -40,8 +41,6 @@ class App extends Component {
   }
 
   async componentWillMount () {    
-    this.model = await tf.loadModel("http://localhost:3000/tf_js_model/model.json");
-
     this.setState({
       areas: Areas()
     }, () => {
@@ -55,24 +54,29 @@ class App extends Component {
   }
 
   getAreasRange = async () => {
-    const { nobed, nobath, notoilets } = this.state;
+    const { no_bed, no_bath, no_toilets, mode } = this.state;
 
-    let tensors = this.state.areas.map((A, i) => {
-      return tf.tensor2d([[A.lng, A.lat, Number(nobed), Number(notoilets), Number(nobath)]]);
+    const { prices } = await Predict({ 
+      locations: this.state.areas.map(({ lat, lng }) => ({ lat, lng })), 
+      specs: { no_bed, no_bath, no_toilets }
+    }, mode);
+
+    this.setState({
+      prices: prices.map((P) => Math.round(P))
     });
-
-    const predictions = tensors.map(T => this.model.predict(T).asScalar().data());
-    const allPrices = await Promise.all(predictions)
-    const prices = allPrices.map(( P ) => Math.ceil(P[0]));
-
-    this.setState({ prices });
   }
 
   getAddressRange = async () => {
-    const { tnobed, tnobath, tnotoilets, currentArea: { lat, lng } } = this.state;
-    const areaT =  tf.tensor2d([[lng, lat, Number(tnobed), Number(tnotoilets), Number(tnobath)]]);
-    const [ areaPrice ] = await this.model.predict(areaT).asScalar().data();
-    this.setState({ areaPrice }); 
+    const { tno_bed: no_bed, tno_bath: no_bath, tno_toilets: no_toilets, currentArea: { lat, lng }, mode } = this.state;
+
+    const { prices } = await Predict({ 
+      locations: [{ lat, lng }], 
+      specs: { no_bed, no_bath, no_toilets }
+    }, mode);
+
+    this.setState({
+      areaPrice:  Math.round(prices[0])
+    });
   }
 
   updateOption = (e, topFilter) => {
@@ -91,6 +95,9 @@ class App extends Component {
   handleChange = () => {
     this.setState({
       mode: !this.state.mode
+    }, () => {
+      this.getAddressRange();
+      this.getAreasRange();
     });
   }
 
@@ -124,6 +131,21 @@ class App extends Component {
       <div className="App">
         <Header />
         <div id="main">
+          <section>
+            <div className="container" style={{ textAlign: 'center' }}>
+              <div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12">
+                <p className="hint">There two models for making predictions. One made with Scikit Learn and the other with Keras. You can switch between models.</p>
+                <br />
+                <label>
+                  <Toggle
+                    defaultChecked={mode}
+                    onChange={this.handleChange} />
+                  {(mode) ? <span className="toggle-label">Scikit Learn Model</span> : <span className="toggle-label">Keras Model</span>}
+                </label>
+              </div>
+            </div>
+          </section>
+          <hr />
           <section>
             <div className="container">
 

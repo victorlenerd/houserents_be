@@ -17,9 +17,6 @@ const Map = compose(
           const refs = {}
         
           this.setState({
-            bounds: {
-                lat: 6.5005, lng: 3.3666
-            },
             center: {
                 lat: 6.5005, lng: 3.3666
             },
@@ -53,7 +50,6 @@ const Map = compose(
         defaultCenter={props.center}>
         <SearchBox
             ref={props.onSearchBoxMounted}
-            bounds={props.bounds}
             controlPosition={window.google.maps.ControlPosition.LEFT_TOP}
             onPlacesChanged={props.onPlacesChanged}
         >

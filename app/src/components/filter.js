@@ -9,19 +9,19 @@ export default (props) => (
         <div  className={(props.showSort) ? "input-container col-lg-12 col-md-12 col-sm-12 col-xs-12": ""}>
             <div className={(props.showSort) ? "col-lg-3 col-md-3 col-sm-6 col-xs-12" : ""}>
                 <div className="input-label">NO. Of Bedrooms</div>
-                <select onChange={props.updateOption} name="nobed">
+                <select onChange={props.updateOption} name="no_bed">
                 {getOptions()}
                 </select>
             </div>
             <div className={(props.showSort) ? "col-lg-3 col-md-3 col-sm-6 col-xs-12" : ""}>
                 <div className="input-label">NO. Of Bathrooms</div>
-                <select onChange={props.updateOption} name="nobath">
+                <select onChange={props.updateOption} name="no_bath">
                 {getOptions()}
                 </select>
             </div>
             <div className={(props.showSort) ? "col-lg-3 col-md-3 col-sm-6 col-xs-12" : ""}>
                 <div className="input-label">NO. Of Toilets</div>
-                <select onChange={props.updateOption} name="notoilets">
+                <select onChange={props.updateOption} name="no_toilets">
                 {getOptions()}
                 </select>
             </div>
