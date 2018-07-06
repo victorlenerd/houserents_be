@@ -23,10 +23,19 @@ class App extends Component {
       nobed: 1,
       nobath: 1,
       notoilets: 1,
-      currentArea: null,
+
+      tnobed: 1,
+      tnobath: 1,
+      tnotoilets: 1,
+
+      currentArea: {
+        lat: 6.5005,
+        lng: 3.3666
+      },
       prices: [],
+      areaPrice: 0,
       mode: true,
-      sort: 'high'
+      sort: 'high',
     }
   }
 
@@ -35,7 +44,10 @@ class App extends Component {
 
     this.setState({
       areas: Areas()
-    }, this.getAreasRange);
+    }, () => {
+      this.getAddressRange();
+      this.getAreasRange();
+    });
 
     $(window).on('scroll', function () { 
       $(".header").css("top", $(this).scrollTop() * .5);
@@ -50,22 +62,29 @@ class App extends Component {
     });
 
     const predictions = tensors.map(T => this.model.predict(T).asScalar().data());
-
     const allPrices = await Promise.all(predictions)
-    
     const prices = allPrices.map(( P ) => Math.ceil(P[0]));
 
     this.setState({ prices });
   }
 
-  updateOption = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
+  getAddressRange = async () => {
+    const { tnobed, tnobath, tnotoilets, currentArea: { lat, lng } } = this.state;
+    const areaT =  tf.tensor2d([[lng, lat, Number(tnobed), Number(tnotoilets), Number(tnobath)]]);
+    const [ areaPrice ] = await this.model.predict(areaT).asScalar().data();
+    this.setState({ areaPrice }); 
+  }
+
+  updateOption = (e, topFilter) => {
+    let name = (!topFilter) ? e.target.name : `t${e.target.name}`;
+    let value = e.target.value; 
 
     this.setState({
       [name]: value
     }, () => {
-      setTimeout(this.getAreasRange, 500);
+      setTimeout(
+        (!topFilter) ? this.getAreasRange : this.getAddressRange
+      , 500);
     });
   }
 
@@ -76,11 +95,20 @@ class App extends Component {
   }
 
   centerChange = center => {
-    console.log('center', center.lat());
+    this.setState({ 
+      currentArea: {
+        lat: center.lat(),
+        lng: center.lng()
+      }
+    }, this.getAddressRange);
+  }
+
+  sort = () => {
+
   }
   
   render() {
-    const { areas, prices, mode } = this.state;
+    const { areas, prices, mode, areaPrice } = this.state;
 
     return (
       <div className="App">
@@ -89,13 +117,6 @@ class App extends Component {
           <section>
             <div className="container">
 
-              <label>
-                <Toggle
-                  defaultChecked={mode}
-                  onChange={this.handleChange} />
-                <span>Use Keras Model</span>
-              </label>
-
               <h2>Discover By Address</h2>
              
               <div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12">
@@ -103,11 +124,11 @@ class App extends Component {
                   <Map onCenterChange={this.centerChange} />
                 </div>
                 <div className="col-lg-3 col-md-3 col-sm-4 col-xs-12 input-container">
-                  <Filter showSort={false} updateOption={this.updateOption} />
+                  <Filter showSort={false} updateOption={e => this.updateOption(e, true)} />
                   <br />
-                  <div className="price">
+                  <div className="price-top">
                     <span>Total Cost:</span>
-                    <h2>₦{parseFloat(300000).toLocaleString('en')}</h2>
+                    <h4>₦{parseFloat(areaPrice).toLocaleString('en')}</h4>
                   </div>
                 </div>
               </div>
@@ -119,7 +140,7 @@ class App extends Component {
             <div className="container">
               <h2>Compare By Areas</h2>
               
-              <Filter showSort={true} updateOption={this.updateOption} />
+              <Filter showSort={true} sort={this.sort} updateOption={this.updateOption} />
 
               <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12">              
                 <div className="input-container col-lg-12 col-md-12 col-sm-12 col-xs-12">

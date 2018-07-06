@@ -233,10 +233,17 @@ h2 {
   border-bottom: none;
 }
 
-.price {
+.price, .price-top {
   font-weight: 800;
+  float: right;
   color: #2BE6A8;
   font-family:  'Archivo', sans-serif;
+}
+
+.price-top {
+  float: none;
+  text-align: center;
+  border: 0px !important;
 }
 
 .map {
@@ -270,9 +277,6 @@ h2 {
     text-align: left
   }
 
-  .price {
-    float: none;
-  }
 
   /* .input-container input {
     margin-top: 0px;
@@ -280,7 +284,11 @@ h2 {
   } */
 }
 
-@media only screen and (max-width: 380px) { 
+@media only screen and (max-width: 380px) {
+  .price {
+    float: none;
+  }
+
   .areas-list li {
     font-size: 14px;
   }
