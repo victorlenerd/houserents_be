@@ -28,9 +28,9 @@ export default (props) => (
 
             {props.showSort && <div className={(props.showSort) ? "col-lg-3 col-md-3 col-sm-6 col-xs-12" : "col-lg-12 col-md-12 col-sm-12 col-xs-12"}>
                 <div className="input-label">Sort</div>
-                <select name="sort" onChange={this.updateOption}>
-                <option value="high">High</option>
-                <option value="low">Low</option>                  
+                <select name="sort" onChange={props.sort}>
+                    <option value="high">High</option>
+                    <option value="low">Low</option>
                 </select>
             </div>}
         </div>

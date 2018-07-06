@@ -103,8 +103,18 @@ class App extends Component {
     }, this.getAddressRange);
   }
 
-  sort = () => {
+  sort = (e) => {
+    let type = e.target.value;
+    let pairAreaPrice = this.state.areas.map((A, i)=> ({ a: A, p: this.state.prices[i]}))
+    
+    let sortedPairs = (type !== 'high') ? 
+      pairAreaPrice.sort((a, b) => a.p - b.p) : 
+      pairAreaPrice.sort((a, b) => b.p - a.p);
 
+    this.setState({
+      prices: sortedPairs.map((sp) => sp.p),
+      areas: sortedPairs.map((sp) => sp.a)
+    });
   }
   
   render() {
