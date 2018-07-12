@@ -8,10 +8,11 @@ model = pickle.load(open('./model.pkl', 'rb'))
 def root_dir():
     return os.path.abspath(os.path.dirname(__file__))
 
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__)
 
 @app.route('/')
 def home():
+    print(root_dir())
     return send_from_directory('./app/build/', 'index.html')
 
 @app.route('/static/js/<path:path>')
