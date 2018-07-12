@@ -1,7 +1,6 @@
-from flask import Flask, request, render_template, jsonify, url_for, send_from_directory
+from flask import Flask, request, render_template, jsonify, send_from_directory
 import pickle
 import pandas as pd
-import math
 import os.path
 
 model = pickle.load(open('./model.pkl', 'rb'))
