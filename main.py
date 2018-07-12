@@ -5,14 +5,12 @@ import os.path
 
 model = pickle.load(open('./model.pkl', 'rb'))
 
-def root_dir():
-    return os.path.abspath(os.path.dirname(__file__))
+print("Mainappp")
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    print(root_dir())
     return send_from_directory('./app/build/', 'index.html')
 
 @app.route('/static/js/<path:path>')
