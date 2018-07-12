@@ -1,5 +1,5 @@
 import React from 'react';
-import { compose, withProps, withStateHandlers, lifecycle }  from "recompose";
+import { compose, withProps, lifecycle }  from "recompose";
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 
 const { SearchBox } = require("react-google-maps/lib/components/places/SearchBox");

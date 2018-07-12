@@ -1,5 +1,4 @@
 import React from 'react';
-import House from '../svg/house.svg';
 
 export default () => (
     <header className="header">
