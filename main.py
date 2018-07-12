@@ -1,34 +1,18 @@
-from flask import Flask, request, render_template, jsonify, send_from_directory
+from flask import Flask, request, render_template, jsonify
 import pickle
 import pandas as pd
 import os.path
 
 model = pickle.load(open('./model.pkl', 'rb'))
-
-print("Mainappp")
-
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def home():
-    print('HOMEing')
-    return send_from_directory('./app/build/', 'index.html')
-
-@app.route('/static/js/<path:path>', methods=['GET'])
-def send_js(path):
-    return send_from_directory('./app/build/static/js', path)
-
-@app.route('/static/css/<path:path>', methods=['GET'])
-def send_css(path):
-    return send_from_directory('./app/build/static/css', path)
-
-@app.route('/static/media/<path:path>', methods=['GET'])
-def send_media(path):
-    return send_from_directory('./app/build/static/media', path)
+    return render_template('index.html')
 
 @app.route('/tf_js_model/<path:path>', methods=['GET'])
 def send_tf_js_model(path):
-    return send_from_directory('./app/build/tf_js_model', path)
+    return app.send_static_file('tf_js_model/'+path)
 
 @app.route('/predict', methods=['POST'])
 def predict():
