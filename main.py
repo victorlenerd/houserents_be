@@ -9,23 +9,24 @@ print("Mainappp")
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def home():
+    print('HOMEing')
     return send_from_directory('./app/build/', 'index.html')
 
-@app.route('/static/js/<path:path>')
+@app.route('/static/js/<path:path>', methods=['GET'])
 def send_js(path):
     return send_from_directory('./app/build/static/js', path)
 
-@app.route('/static/css/<path:path>')
+@app.route('/static/css/<path:path>', methods=['GET'])
 def send_css(path):
     return send_from_directory('./app/build/static/css', path)
 
-@app.route('/static/media/<path:path>')
+@app.route('/static/media/<path:path>', methods=['GET'])
 def send_media(path):
     return send_from_directory('./app/build/static/media', path)
 
-@app.route('/tf_js_model/<path:path>')
+@app.route('/tf_js_model/<path:path>', methods=['GET'])
 def send_tf_js_model(path):
     return send_from_directory('./app/build/tf_js_model', path)
 
