@@ -1,14 +1,36 @@
-from flask import Flask, request, render_template, jsonify
-from flask_cors import CORS
+from flask import Flask, request, render_template, jsonify, url_for, send_from_directory
 import pickle
 import pandas as pd
 import math
+import os.path
 
-df = pd.read_csv('./data.csv')
 model = pickle.load(open('./model.pkl', 'rb'))
-app = Flask(__name__)
-CORS(app)
-      
+
+def root_dir():
+    return os.path.abspath(os.path.dirname(__file__))
+
+app = Flask(__name__, static_url_path='')
+
+@app.route('/')
+def home():
+    return send_from_directory('./app/build/', 'index.html')
+
+@app.route('/static/js/<path:path>')
+def send_js(path):
+    return send_from_directory('./app/build/static/js', path)
+
+@app.route('/static/css/<path:path>')
+def send_css(path):
+    return send_from_directory('./app/build/static/css', path)
+
+@app.route('/static/media/<path:path>')
+def send_media(path):
+    return send_from_directory('./app/build/static/media', path)
+
+@app.route('/tf_js_model/<path:path>')
+def send_tf_js_model(path):
+    return send_from_directory('./app/build/tf_js_model', path)
+
 @app.route('/predict', methods=['POST'])
 def predict():
     locations = request.json['locations']
