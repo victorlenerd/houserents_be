@@ -6,7 +6,7 @@ const { SearchBox } = require("react-google-maps/lib/components/places/SearchBox
 
 const Map = compose(
     withProps({
-      googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAocqXY_T47teK7S-Ia2qXn3jpDjD7JjcY&v=3.exp&libraries=places",
+      googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyCp3UKASbZkqvCnW3l_RLgM5Ik15JBKpPc&v=3.exp&libraries=places",
       containerElement: <div className="input-container" style={{ height: `300px`, width: '100%', paddingTop: 0, paddingBottom: 0 }} />,
       loadingElement: <div style={{ height: `300px` }} />,
       mapElement: <div style={{ height: `300px` }} />,

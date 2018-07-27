@@ -132,21 +132,6 @@ class App extends Component {
         <Header />
         <div id="main">
           <section>
-            <div className="container" style={{ textAlign: 'center' }}>
-              <div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12">
-                <p className="hint">There two models for making predictions. One made with Scikit Learn and the other with Keras. You can switch between models.</p>
-                <br />
-                <label>
-                  <Toggle
-                    defaultChecked={mode}
-                    onChange={this.handleChange} />
-                  {(mode) ? <span className="toggle-label">Scikit Learn Model</span> : <span className="toggle-label">Keras Model</span>}
-                </label>
-              </div>
-            </div>
-          </section>
-          <hr />
-          <section>
             <div className="container">
 
               <h2>Discover By Address</h2>
