@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 import pickle
 import pandas as pd
-import os.path
+import os
 
 model = pickle.load(open('./model.pkl', 'rb'))
 app = Flask(__name__)
@@ -9,10 +9,6 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
-
-@app.route('/tf_js_model/<path:path>', methods=['GET'])
-def send_tf_js_model(path):
-    return app.send_static_file('tf_js_model/'+path)
 
 @app.route('/predict', methods=['POST'])
 def predict():
