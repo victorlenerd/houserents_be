@@ -4,7 +4,7 @@ import os
 import sys
 from controllers.home.home_controller import HomeController
 # from controllers.predict.predict_controller import PredictController
-from db.connect import connect
+from db.connect import connectDB
 
 root_dir = os.path.dirname(__file__)
 
@@ -15,12 +15,11 @@ HOST = os.environ["DB_HOST"]
 DB_NAME = os.environ["DB_NAME"]
 DB_USER = os.environ["DB_USER"]
 DB_PASSWORD = os.environ["DB_PASSWORD"]
+DB_PORT = os.environ["DB_PORT"]
 
-connect(host=HOST, db_name=DB_NAME, db_user=DB_USER, db_password=DB_PASSWORD)
+connectDB(host=HOST, db_name=DB_NAME, db_user=DB_USER, db_password=DB_PASSWORD, db_port=DB_PORT)
 
 try:
-    root_dir = os.path.dirname(__file__)
-
     if os.environ["ENV"] == "DEV":
         template_dir = os.path.join(root_dir, 'view')
         template_dir = os.path.join(template_dir, 'public')

@@ -3,9 +3,12 @@ BEGIN
     IF NOT EXISTS (SELECT * FROM pg_extension WHERE extname='postgis') THEN
         CREATE EXTENSION postgis;
     END IF;
+    IF NOT EXISTS (SELECT * FROM pg_extension WHERE extname='pgcrypto') THEN
+        CREATE EXTENSION pgcrypto;
+    END IF;
 END$$;
 
-CREATE TABLE IF NOT EXISTS APARTMENTS (
+CREATE TABLE IF NOT EXISTS apartments (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     no_bed INT NOT NULL,
     no_bath INT NOT NULL,
