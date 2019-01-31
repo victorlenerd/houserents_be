@@ -1,5 +1,5 @@
 import React from 'react';
-import cog from '../svg/cog.svg';
+import cog from '../assets/svg/cog.svg';
 
 export default () => (
     <div className="footer">
