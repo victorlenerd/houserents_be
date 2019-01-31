@@ -2,7 +2,6 @@ import psycopg2
 import os
 import json
 import datetime
-from dateutil import parser
 
 root_dir = os.path.dirname(__file__)
 

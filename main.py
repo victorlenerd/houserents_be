@@ -24,7 +24,8 @@ try:
         template_dir = os.path.join(root_dir, 'view')
         template_dir = os.path.join(template_dir, 'public')
         static_dir = os.path.join(root_dir, 'view')
-        static_dir = os.path.join(template_dir, 'src')
+        static_dir = os.path.join(static_dir, 'public')
+        static_dir = os.path.join(static_dir, 'dist')
         print("Development enviroment")
     else:
         template_dir = os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
@@ -35,7 +36,7 @@ try:
 except KeyError:
     print("ENV is not set")
 
-app = Flask(__name__, template_folder=template_dir, static_url_path=static_dir)
+app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 
 HomeController = HomeController()
 # PredictController = PredictController()
