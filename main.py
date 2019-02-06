@@ -3,7 +3,7 @@ from dotenv import load_dotenv, find_dotenv
 import os
 import sys
 from controllers.home.home_controller import HomeController
-# from controllers.predict.predict_controller import PredictController
+from controllers.predict.predict_controller import PredictController
 from db.connect import connectDB
 
 root_dir = os.path.dirname(__file__)
@@ -17,7 +17,7 @@ DB_USER = os.environ["DB_USER"]
 DB_PASSWORD = os.environ["DB_PASSWORD"]
 DB_PORT = os.environ["DB_PORT"]
 
-connectDB(host=HOST, db_name=DB_NAME, db_user=DB_USER, db_password=DB_PASSWORD, db_port=DB_PORT)
+db_context = connectDB(host=HOST, db_name=DB_NAME, db_user=DB_USER, db_password=DB_PASSWORD, db_port=DB_PORT)
 
 try:
     if os.environ["ENV"] == "DEV":
@@ -39,15 +39,15 @@ except KeyError:
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 
 HomeController = HomeController()
-# PredictController = PredictController()
+PredictController = PredictController()
 
 @app.route('/', methods=['GET'])
 def home():
     return HomeController.renderHome()
 
-# @app.route('/predict', methods=['POST'])
-# def predict(data):
-#     return PredictController.predict(data)
+@app.route('/predict', methods=['POST'])
+def predict():
+    return PredictController.predict(request.data, db_context)
 
 if __name__ == '__main__':
 	app.run()
