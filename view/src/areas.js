@@ -79,10 +79,6 @@ export default () => [{
         "lat": 6.531235,
         "lng": 3.394971
     }, {
-        "name": "Ilashe",
-        "lat": 6.4042593,
-        "lng": 3.295804
-    }, {
         "name": "Ilupeju",
         "lat": 6.553648,
         "lng": 3.356674
@@ -116,8 +112,8 @@ export default () => [{
         "lng": 3.365344
     }, {
         "name": "Mushin",
-        "lat": 6.5352,
-        "lng": 3.3490
+        "lat": 6.5220,
+        "lng": 3.3414
     }, {
         "name": "Ogba",
         "lat": 6.6232,
