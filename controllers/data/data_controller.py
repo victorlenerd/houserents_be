@@ -1,31 +1,70 @@
-import pandas as pd
+import datetime
 import numpy as np
+import pandas as pd
 import requests
-import json
-from flask import jsonify
-
 import os
 
-def clean_data():
-    df = pd.read_json('./data.json')
+from db.connect import DBConnector
 
+
+def populate_db(data):
+
+    conn = DBConnector.instance.db_context
+
+    with conn.cursor() as curr:
+        for apartment in data:
+            if apartment.has_key('lat') and apartment.has_key('lng'): 
+                date_added = apartment['date_added'].split('T')[0]
+                split_date = date_added.split('-')
+                year = int(split_date[0])
+                month = int(split_date[1])
+                day = int(split_date[2])
+                date = datetime.date(year, month, day)
+                lat_lng = 'POINT({lat} {lng})'.format(lat=apartment['lat'], lng=apartment['lng'])
+                curr.execute("""
+                        INSERT INTO apartments (latLng, no_bed, no_bath, no_toilets, price, url, source, address, date_added) 
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """,
+                    (
+                        lat_lng,
+                        apartment['no_bed'],
+                        apartment['no_bath'], 
+                        apartment['no_toilets'],
+                        apartment['price'],
+                        apartment['url'],
+                        apartment['source'],
+                        apartment['address'],
+                        date
+                    ))
+        conn.commit()
+
+    return "Thank you!"
+
+
+def clean_data():
+
+    df = pd.read_json('./data.json')
     df['no_toilets'] = df['no_toilets'].astype('int32')
     df['no_bath'] = df['no_toilets'].astype('int32')
     df['no_bed'] = df['no_toilets'].astype('int32')
     df['url'] = df['url'].astype('str')
+    df['source'] = df['source'].astype('str')
     df['address'] = df['address'].astype('str')
     df = df[(df['no_bed'] >= 1) & (df['no_toilets'] >= 1) & (df['no_bath'] >= 1)]
     df = df[(df['no_bed'] <= 10) & (df['no_bath'] <= 10) & (df['no_toilets'] <= 10)]
+    df = df[np.isfinite(df['lat'])]
+    df = df[np.isfinite(df['lng'])]
     df = df.drop_duplicates()
+    return populate_db(df.to_dict(orient="records"))
 
-    return df.to_json(orient="records")
 
-def download_data(date, db_context):
-    url = '{}/data/{}'.format(os.environ["DATA_SERVER"], date)
+def download_data(date):
 
-    with open('./data.json', 'w', 1) as dataFile: 
+    url = '{}/data/data.{}.json'.format(os.environ["DATA_SERVER"], date)
+
+    with open('./data.json', 'w', 1) as dataFile:
         r = requests.get(url)
         dataFile.write(r.text.encode('ascii', 'ignore'))
         dataFile.close()
 
-    return clean_data(db_context)
+    return clean_data()

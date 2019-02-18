@@ -8,7 +8,6 @@ BEGIN
     END IF;
 END$$;
 
-
 CREATE TABLE IF NOT EXISTS apartments (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     no_bed INT NOT NULL,
@@ -16,8 +15,8 @@ CREATE TABLE IF NOT EXISTS apartments (
     no_toilets INT NOT NULL,
     price FLOAT NOT NULL,
     url VARCHAR(350) NOT NULL,
-    agent_phone VARCHAR(350) NOT NULL,
-    agent_name VARCHAR(350) NOT NULL,
+    address VARCHAR(350) NOT NULL,
+    source VARCHAR(350) NOT NULL,
     date_added TIMESTAMPTZ NOT NULL,
     latLng GEOGRAPHY(Point)
 );

@@ -1,22 +1,23 @@
 from flask import jsonify
 import json
+import numpy as np
+from db.connect import DBConnector
 
-def computeMedian(record):
+
+def compute_median(record):
+
     nums = []
 
     for r in record:
         nums.append(r[0])
 
-    n = len(nums)
+    median_values = np.median(np.array(nums))
+    removed_nan = np.nan_to_num(median_values)
 
-    if n < 1:
-        return 0
-    if n % 2 == 1:
-        return sorted(nums)[n//2]
-    else:
-        return sum(sorted(nums)[n//2-1:n//2+1])/2.0
+    return removed_nan.tolist()
 
-def predict(data, db):
+
+def predict(data):
 
     results = {
         "prices": []
@@ -27,7 +28,9 @@ def predict(data, db):
     no_bath = data['specs']['no_bath']
     no_bed = data['specs']['no_bed']
 
-    with db.cursor() as curr:
+    conn = DBConnector.instance.db_context
+
+    with conn.cursor() as curr:
 
         for d in data['locations']:
             lat_lng_point = 'POINT({} {})'.format(d['lat'], d['lng'])
@@ -35,7 +38,7 @@ def predict(data, db):
             
             curr.execute(query)
             record = curr.fetchall()
-            median = computeMedian(record)
+            median = compute_median(record)
             results["prices"].append(median)
 
     return jsonify(results)
