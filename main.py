@@ -44,11 +44,6 @@ app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 app.before_request(bind_request_params)
 
 
-@app.route('/', methods=['GET'])
-def home():
-    return home_controller.renderHome()
-
-
 @app.route('/predict', methods=['POST'])
 def predict():
     return predict_controller.predict(request.data)
