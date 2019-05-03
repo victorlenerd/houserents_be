@@ -13,29 +13,29 @@ def populate_db(data):
 
     with conn.cursor() as curr:
         for apartment in data:
-            if apartment.has_key('lat') and apartment.has_key('lng'): 
-                date_added = apartment['date_added'].split('T')[0]
-                split_date = date_added.split('-')
-                year = int(split_date[0])
-                month = int(split_date[1])
-                day = int(split_date[2])
-                date = datetime.date(year, month, day)
-                lat_lng = 'POINT({lat} {lng})'.format(lat=apartment['lat'], lng=apartment['lng'])
-                curr.execute("""
-                        INSERT INTO apartments (latLng, no_bed, no_bath, no_toilets, price, url, source, address, date_added) 
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                    """,
-                    (
-                        lat_lng,
-                        apartment['no_bed'],
-                        apartment['no_bath'], 
-                        apartment['no_toilets'],
-                        apartment['price'],
-                        apartment['url'],
-                        apartment['source'],
-                        apartment['address'],
-                        date
-                    ))
+            date_added = apartment['date_added'].split('T')[0]
+            split_date = date_added.split('-')
+            year = int(split_date[0])
+            month = int(split_date[1])
+            day = int(split_date[2])
+            date = datetime.date(year, month, day)
+            lat_lng = 'POINT({lat} {lng})'.format(lat=apartment['lat'], lng=apartment['lng'])
+            curr.execute(
+                """
+                    INSERT INTO apartments (latLng, no_bed, no_bath, no_toilets, price, url, source, address, date_added) 
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """,
+                (
+                    lat_lng,
+                    apartment['no_bed'],
+                    apartment['no_bath'],
+                    apartment['no_toilets'],
+                    apartment['price'],
+                    apartment['url'],
+                    apartment['source'],
+                    apartment['address'],
+                    date
+                ))
         conn.commit()
 
     return "Thank you!"
@@ -64,7 +64,7 @@ def download_data(date):
 
     with open('./data.json', 'w', 1) as dataFile:
         r = requests.get(url)
-        dataFile.write(r.text.encode('ascii', 'ignore'))
+        dataFile.write(r.text)
         dataFile.close()
 
     return clean_data()

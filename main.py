@@ -1,9 +1,9 @@
 from flask import Flask, request
+from flask_cors import CORS
 from flask_request_params import bind_request_params
 from dotenv import load_dotenv
 import os
 
-from controllers.home import home_controller
 from controllers.data import data_controller
 from controllers.predict import predict_controller
 
@@ -41,6 +41,7 @@ except KeyError:
     print("ENV is not set")
 
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
+CORS(app)
 app.before_request(bind_request_params)
 
 
