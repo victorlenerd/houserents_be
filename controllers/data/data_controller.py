@@ -22,7 +22,7 @@ def populate_db(data):
             lat_lng = 'POINT({lat} {lng})'.format(lat=apartment['lat'], lng=apartment['lng'])
             curr.execute(
                 """
-                    INSERT INTO apartments (latLng, no_bed, no_bath, no_toilets, price, url, source, address, date_added) 
+                    INSERT INTO apartments (latLng, no_bed, no_bath, no_toilets, price, url, source, address, description, date_added) 
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """,
                 (
@@ -34,6 +34,7 @@ def populate_db(data):
                     apartment['url'],
                     apartment['source'],
                     apartment['address'],
+                    apartment['description'],
                     date
                 ))
         conn.commit()
@@ -50,6 +51,7 @@ def clean_data():
     df['url'] = df['url'].astype('str')
     df['source'] = df['source'].astype('str')
     df['address'] = df['address'].astype('str')
+    df['description'] = df['description'].astype('str')
     df = df[(df['no_bed'] >= 1) & (df['no_toilets'] >= 1) & (df['no_bath'] >= 1)]
     df = df[(df['no_bed'] <= 10) & (df['no_bath'] <= 10) & (df['no_toilets'] <= 10)]
     df = df[np.isfinite(df['lat'])]
