@@ -50,9 +50,9 @@ def predict():
     return predict_controller.predict(request.data)
 
 
-@app.route('/data/<date>', methods=['GET'])
-def download_data(date):
-    return data_controller.download_data(date)
+@app.route('/data', methods=['GET'])
+def download_data():
+    return data_controller.download_data()
 
 
 if __name__ == '__main__':

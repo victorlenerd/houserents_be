@@ -12,6 +12,8 @@ def populate_db(data):
     conn = DBConnector.instance.db_context
 
     with conn.cursor() as curr:
+        curr.execute("TRUNCATE apartments;")
+
         for apartment in data:
             date_added = apartment['date_added'].split('T')[0]
             split_date = date_added.split('-')
@@ -23,7 +25,7 @@ def populate_db(data):
             curr.execute(
                 """
                     INSERT INTO apartments (latLng, no_bed, no_bath, no_toilets, price, url, source, address, description, date_added) 
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
                 """,
                 (
                     lat_lng,
@@ -57,12 +59,13 @@ def clean_data():
     df = df[np.isfinite(df['lat'])]
     df = df[np.isfinite(df['lng'])]
     df = df.drop_duplicates()
+
     return populate_db(df.to_dict(orient="records"))
 
 
-def download_data(date):
+def download_data():
 
-    url = '{}/data/data.{}.json'.format(os.environ["DATA_SERVER"], date)
+    url = '{}/data/data.json'.format(os.environ["DATA_SERVER"])
 
     with open('./data.json', 'w', 1) as dataFile:
         r = requests.get(url)
