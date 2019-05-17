@@ -69,7 +69,7 @@ def download_data():
 
     with open('./data.json', 'w', 1) as dataFile:
         r = requests.get(url)
-        dataFile.write(r.text)
+        dataFile.write(r.text.encode('ascii', 'ignore'))
         dataFile.close()
 
     return clean_data()
