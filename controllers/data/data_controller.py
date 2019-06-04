@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import requests
 import os
+import json
 
 from db.connect import DBConnector
 
@@ -67,9 +68,9 @@ def download_data():
 
     url = '{}/data/data.json'.format(os.environ["DATA_SERVER"])
 
-    with open('./data.json', 'w', 1) as dataFile:
+    with open('./data.json', 'w', encoding='utf-8') as dataFile:
         r = requests.get(url)
-        dataFile.write(r.text.encode('ascii', 'ignore'))
+        dataFile.write(json.dumps(r.json()))
         dataFile.close()
 
     return clean_data()

@@ -4,6 +4,7 @@ from flask_request_params import bind_request_params
 from dotenv import load_dotenv
 import os
 
+from controllers.apartments import apartments_controller
 from controllers.data import data_controller
 from controllers.predict import predict_controller
 
@@ -43,6 +44,11 @@ except KeyError:
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 CORS(app)
 app.before_request(bind_request_params)
+
+
+@app.route('/apartments', methods=['POST'])
+def apartments():
+    return apartments_controller.fetch_apartments(request.args['offset'], request.args['limit'], request.get_json())
 
 
 @app.route('/predict', methods=['POST'])
