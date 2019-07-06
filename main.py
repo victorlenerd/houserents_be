@@ -53,7 +53,7 @@ def apartments():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    return predict_controller.predict(request.data)
+    return predict_controller.predict(request.get_json())
 
 
 @app.route('/data', methods=['GET'])

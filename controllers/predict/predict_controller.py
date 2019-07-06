@@ -1,5 +1,4 @@
 from flask import jsonify
-import json
 import numpy as np
 from db.connect import DBConnector
 
@@ -23,7 +22,6 @@ def predict(data):
         "prices": []
     }
 
-    data = json.loads(data)
     no_toilets = data['specs']['no_toilets']
     no_bath = data['specs']['no_bath']
     no_bed = data['specs']['no_bed']
@@ -34,7 +32,7 @@ def predict(data):
 
         for d in data['locations']:
             lat_lng_point = 'POINT({} {})'.format(d['lat'], d['lng'])
-            query = 'SELECT price FROM apartments WHERE st_dwithin(latLng, st_geomfromtext(\'{}\'), 5000) AND no_bed = {} AND  no_bath = {} AND no_toilets = {};'.format(lat_lng_point, no_bed, no_bath, no_toilets)
+            query = 'SELECT price FROM apartments WHERE st_dwithin(latLng, st_geomfromtext(\'{}\'), 5000) AND no_bed <= {} AND  no_bath <= {} AND no_toilets <= {};'.format(lat_lng_point, no_bed, no_bath, no_toilets)
             
             curr.execute(query)
             record = curr.fetchall()
