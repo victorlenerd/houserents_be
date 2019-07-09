@@ -13,14 +13,6 @@ RUN chmod +x boot.sh
 
 ENV FLASK_APP main.py
 
-ENV ENV production
-ENV DB_HOST ${DB_HOST}
-ENV DB_NAME ${DB_NAME}
-ENV DB_USER ${DB_USER}
-ENV DB_PASSWORD ${DB_PASSWORD}
-ENV DB_PORT ${DB_PORT}
-ENV DATA_SERVER ${DATA_SERVER}
-
 EXPOSE 5000
 
-CMD ["gunicorn -b :5000 --access-logfile - --error-logfile - main:app"]
+CMD ["./boot.sh"]
