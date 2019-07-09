@@ -2,10 +2,10 @@
     "cluster": "houserents-dev",
     "serviceName": "api",
     "taskDefinition": "houserents-dev-api",
-    "desiredCount": 1,
     "launchType": "EC2",
     "deploymentConfiguration": {
         "maximumPercent": 100,
         "minimumHealthyPercent": 50
-    }
+    },
+    "schedulingStrategy": "DAEMON"
 }
