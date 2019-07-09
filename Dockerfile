@@ -22,3 +22,5 @@ ENV DB_PORT ${DB_PORT}
 ENV DATA_SERVER ${DATA_SERVER}
 
 EXPOSE 5000
+
+CMD ["gunicorn -b :5000 --access-logfile - --error-logfile - main:app"]
