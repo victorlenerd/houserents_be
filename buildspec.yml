@@ -24,3 +24,7 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Writing task definitions file
+      - printf '[{ "name":"api","imageUri":"%s" }]' $REPOSITORY_URI:$IMAGE_TAG > taskdefinition.json
+  artifacts:
+    files: taskdefinition.json

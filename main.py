@@ -24,22 +24,7 @@ DEBUG = os.environ["ENV"] == "DEV"
 
 DBConnector(host=HOST, db_name=DB_NAME, db_user=DB_USER, db_password=DB_PASSWORD, db_port=DB_PORT)
 
-try:
-    if os.environ["ENV"] == "DEV":
-        template_dir = os.path.join(root_dir, 'view')
-        template_dir = os.path.join(template_dir, 'public')
-        static_dir = os.path.join(root_dir, 'view')
-        static_dir = os.path.join(static_dir, 'public')
-        static_dir = os.path.join(static_dir, 'dist')
-        print("Development Environment")
-    else:
-        template_dir = os.path.dirname(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-        template_dir = os.path.join(template_dir, 'view')
-        template_dir = os.path.join(template_dir, 'build')
-        static_dir = os.path.join(root_dir, 'view')
-        static_dir = os.path.join(template_dir, 'assets')
-except KeyError:
-    print("ENV is not set")
+print("API Server Started")
 
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 CORS(app)
