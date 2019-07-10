@@ -26,7 +26,7 @@ DBConnector(host=HOST, db_name=DB_NAME, db_user=DB_USER, db_password=DB_PASSWORD
 
 print("API Server Started")
 
-app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
+app = Flask(__name__)
 CORS(app)
 app.before_request(bind_request_params)
 
