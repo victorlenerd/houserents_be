@@ -24,7 +24,7 @@ DEBUG = os.environ["ENV"] == "DEV"
 
 DBConnector(host=HOST, db_name=DB_NAME, db_user=DB_USER, db_password=DB_PASSWORD, db_port=DB_PORT)
 
-print('API Server Started On Port ', DB_PORT, DEBUG, HOST, DB_USER)
+print('API Server Started On Port ', DB_PORT, DEBUG, HOST, DB_USER, DB_PASSWORD)
 
 app = Flask(__name__)
 CORS(app)

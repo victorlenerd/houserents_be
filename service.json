@@ -4,8 +4,9 @@
     "taskDefinition": "houserents-dev-api",
     "launchType": "EC2",
     "deploymentConfiguration": {
-        "maximumPercent": 100,
-        "minimumHealthyPercent": 50
+        "maximumPercent": 200,
+        "minimumHealthyPercent": 100
     },
-    "schedulingStrategy": "DAEMON"
+    "desiredCount": 1,
+    "schedulingStrategy": "REPLICA"
 }
