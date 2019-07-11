@@ -5,7 +5,7 @@
     "launchType": "EC2",
     "deploymentConfiguration": {
         "maximumPercent": 200,
-        "minimumHealthyPercent": 100
+        "minimumHealthyPercent": 50
     },
     "desiredCount": 1,
     "schedulingStrategy": "REPLICA"
