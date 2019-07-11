@@ -25,7 +25,7 @@ phases:
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing task definitions
-      - printf '[{"family":"houserents-dev-api","executionRoleArn":"arn:aws:iam::699011322781:role/ecsTaskExecutionRole","containerDefinitions":[{"image":"%s","name":"api","portMappings":[{"hostPort":5000,"protocol":"tcp","containerPort":5000}],"environment":[{"name":"DATA_SERVER","value":"http://localhost:8080"},{"name":"DB_HOST","value":"dbinstance-dev.ceumxnrra9wt.us-east-2.rds.amazonaws.com"},{"name":"DB_NAME","value":"houserents"},{"name":"DB_PASSWORD","value":"WebWizard#1"},{"name":"DB_PORT","value":"5432"},{"name":"DB_USER","value":"dbinstance_dev"},{"name":"ENV","value":"DEV"}],"memory":500,"cpu":500}],"taskRoleArn":"arn:aws:iam::699011322781:role/ecsTaskExecutionRole","requiresCompatibilities":["EC2"]}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"image":"%s","name":"api","portMappings":[{"hostPort":5000,"protocol":"tcp","containerPort":5000}],"environment":[{"name":"DATA_SERVER","value":"http://localhost:8080"},{"name":"DB_HOST","value":"dbinstance-dev.ceumxnrra9wt.us-east-2.rds.amazonaws.com"},{"name":"DB_NAME","value":"houserents"},{"name":"DB_PASSWORD","value":"WebWizard#1"},{"name":"DB_PORT","value":"5432"},{"name":"DB_USER","value":"dbinstance_dev"},{"name":"ENV","value":"DEV"}],"memory":500,"cpu":500}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 
 artifacts:
   files: imagedefinitions.json
