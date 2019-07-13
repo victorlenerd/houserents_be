@@ -1,9 +1,10 @@
-FROM python:3
+FROM python:3-alphine
 
 WORKDIR /home/houserents
 
-ADD ./requirements.txt ./requirements.txt
-RUN pip install -r requirements.txt
+COPY ./requirements.txt ./requirements.txt
+COPY ./lib ./lib
+RUN pip install -r requirements.txt -t lib
 
 COPY controllers controllers
 COPY db db
