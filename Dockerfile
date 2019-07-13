@@ -3,7 +3,7 @@ FROM python:3
 WORKDIR /home/houserents
 
 COPY ./requirements.txt ./requirements.txt
-RUN pip install -r requirements.txt -t lib
+RUN pip install -r requirements.txt
 
 COPY controllers controllers
 COPY db db
