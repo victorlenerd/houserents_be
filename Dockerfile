@@ -2,8 +2,7 @@ FROM python:3
 
 WORKDIR /home/houserents
 
-COPY requirements.txt requirements.txt
-RUN pip install --upgrade pip
+ADD ./requirements.txt ./requirements.txt
 RUN pip install -r requirements.txt
 
 COPY controllers controllers
@@ -13,6 +12,6 @@ RUN chmod +x boot.sh
 
 ENV FLASK_APP main.py
 
-EXPOSE 5000
+EXPOSE ${PORT}
 
 CMD ["./boot.sh"]
