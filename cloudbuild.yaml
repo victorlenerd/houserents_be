@@ -10,3 +10,4 @@ steps:
   args: ['beta', 'run', 'deploy', 'houserents-dev-api', '--image', 'gcr.io/$PROJECT_ID/houserents-dev-api', '--region', 'us-central1','--platform', 'managed']
 images:
 - gcr.io/$PROJECT_ID/houserents-dev-api
+timeout: 1500s
