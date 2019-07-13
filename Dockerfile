@@ -1,4 +1,4 @@
-FROM python:3.5-alpine3.9
+FROM python:3
 
 WORKDIR /home/houserents
 
