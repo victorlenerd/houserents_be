@@ -1,3 +1,2 @@
 #!/bin/sh
-source venv/bin/activate
-exec gunicorn -b :5000 --access-logfile - --error-logfile - main:app
+exec gunicorn -b :$PORT --timeout=1200 --log-level=debug --access-logfile - --error-logfile - main:app

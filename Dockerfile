@@ -2,8 +2,7 @@ FROM python:3
 
 WORKDIR /home/houserents
 
-COPY requirements.txt requirements.txt
-RUN pip install --upgrade pip
+COPY ./requirements.txt ./requirements.txt
 RUN pip install -r requirements.txt
 
 COPY controllers controllers
@@ -13,12 +12,6 @@ RUN chmod +x boot.sh
 
 ENV FLASK_APP main.py
 
-ENV ENV production
-ENV DB_HOST ${DB_HOST}
-ENV DB_NAME ${DB_NAME}
-ENV DB_USER ${DB_USER}
-ENV DB_PASSWORD ${DB_PASSWORD}
-ENV DB_PORT ${DB_PORT}
-ENV DATA_SERVER ${DATA_SERVER}
+EXPOSE ${PORT}
 
-EXPOSE 5000
+CMD ["./boot.sh"]
