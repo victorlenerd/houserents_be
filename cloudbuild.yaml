@@ -25,7 +25,7 @@ steps:
     'managed',
     '--memory',
     '350M',
-    '--set-env-vars=DATA_SERVER=18.217.190.92:8080,DB_HOST=dbinstance-dev.ceumxnrra9wt.us-east-2.rds.amazonaws.com,DB_NAME=houserents,DB_PASSWORD=WebWizard#1,DB_PORT=5432,DB_USER=dbinstance_dev,ENV=DEV'
+    '--set-env-vars=DATA_SERVER=http://18.217.190.92:8080,DB_HOST=dbinstance-dev.ceumxnrra9wt.us-east-2.rds.amazonaws.com,DB_NAME=houserents,DB_PASSWORD=WebWizard#1,DB_PORT=5432,DB_USER=dbinstance_dev,ENV=DEV'
   ]
 images:
 - gcr.io/$PROJECT_ID/houserents-dev-api
