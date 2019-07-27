@@ -13,6 +13,7 @@ COPY main.py boot.sh /usr/src/hourserents/
 RUN chmod +x boot.sh
 
 ENV FLASK_APP main.py
+ENV PORT ${PORT}
 
 EXPOSE ${PORT}
 
