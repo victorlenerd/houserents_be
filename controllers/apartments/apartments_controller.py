@@ -20,12 +20,25 @@ def fetch_apartments(offset, limit, data):
                     SELECT address, no_bath, no_bed, no_toilets, price, source, url, 
                         description, date_added, ST_AsText(latlng) as latlng 
                     FROM apartments 
-                    WHERE no_bed <= {} AND no_bath <= {} AND no_toilets <= {} AND st_dwithin(latLng, st_geomfromtext(\'{}\'), 5000)
+                    WHERE no_bed <= {} 
+                    AND no_bath <= {} 
+                    AND no_toilets <= {} 
+                    AND st_dwithin(latLng, st_geomfromtext(\'{}\'), 5000)
                     ORDER BY date_added DESC
                     OFFSET {} LIMIT {}
                 """.format(no_bed, no_bath, no_toilets, lat_lng_point, offset, limit)
 
-        curr.execute(query)
-        record = curr.fetchall()
+        query_result_count = """
+                SELECT COUNT(id)
+                FROM apartments 
+                WHERE no_bed <= {} AND no_bath <= {} AND no_toilets <= {} 
+                AND st_dwithin(latLng, st_geomfromtext(\'{}\'), 5000)
+            """.format(no_bed, no_bath, no_toilets, lat_lng_point)
 
-    return jsonify(record)
+        curr.execute(query)
+        records = curr.fetchall()
+
+        curr.execute(query_result_count)
+        count = curr.fetchone()['count']
+
+    return jsonify({ "data": records, "total": count })
