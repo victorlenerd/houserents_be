@@ -20,7 +20,6 @@ DB_NAME = os.environ["DB_NAME"]
 DB_USER = os.environ["DB_USER"]
 DB_PASSWORD = os.environ["DB_PASSWORD"]
 DB_PORT = os.environ["DB_PORT"]
-PORT = os.environ["PORT"]
 DEBUG = os.environ["ENV"] == "DEV"
 
 DBConnector(host=HOST, db_name=DB_NAME, db_user=DB_USER, db_password=DB_PASSWORD, db_port=DB_PORT)
@@ -46,4 +45,4 @@ def download_data():
     return data_controller.download_data()
 
 if __name__ == '__main__':
-    app.run(debug=DEBUG, host='0.0.0.0', port=int(PORT))
+    app.run(debug=DEBUG)

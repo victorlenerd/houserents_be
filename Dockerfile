@@ -12,6 +12,6 @@ RUN chmod +x boot.sh
 
 ENV FLASK_APP main.py
 
-EXPOSE ${PORT}
+EXPOSE 5000
 
 CMD ["./boot.sh"]
