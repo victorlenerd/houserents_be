@@ -13,7 +13,7 @@ def populate_db(data):
     conn = DBConnector.instance.db_context
 
     with conn.cursor() as curr:
-        curr.execute("TRUNCATE apartments;")
+        curr.execute("TRUNCATE models.py;")
 
         for apartment in data:
             date_added = apartment['date_added'].split('T')[0]
@@ -25,7 +25,7 @@ def populate_db(data):
             lat_lng = 'POINT({lat} {lng})'.format(lat=apartment['lat'], lng=apartment['lng'])
             curr.execute(
                 """
-                    INSERT INTO apartments (latLng, no_bed, no_bath, no_toilets, price, url, source, address, description, date_added) 
+                    INSERT INTO models.py (latLng, no_bed, no_bath, no_toilets, price, url, source, address, description, date_added)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
                 """,
                 (

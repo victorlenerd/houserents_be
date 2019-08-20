@@ -32,7 +32,7 @@ def predict(data):
 
         for d in data['locations']:
             lat_lng_point = 'POINT({} {})'.format(d['lat'], d['lng'])
-            query = 'SELECT price FROM apartments WHERE st_dwithin(latLng, st_geomfromtext(\'{}\'), 5000) AND no_bed <= {} AND  no_bath <= {} AND no_toilets <= {};'.format(lat_lng_point, no_bed, no_bath, no_toilets)
+            query = 'SELECT price FROM models.py WHERE st_dwithin(latLng, st_geomfromtext(\'{}\'), 5000) AND no_bed <= {} AND  no_bath <= {} AND no_toilets <= {};'.format(lat_lng_point, no_bed, no_bath, no_toilets)
             
             curr.execute(query)
             record = curr.fetchall()

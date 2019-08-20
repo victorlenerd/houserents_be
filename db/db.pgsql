@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS apartments (
     no_bath INT NOT NULL,
     no_toilets INT NOT NULL,
     price FLOAT NOT NULL,
+    views INT DEFAULT 0,
     url VARCHAR(350) NOT NULL,
     address VARCHAR(350) NOT NULL,
     description TEXT NOT NULL,
