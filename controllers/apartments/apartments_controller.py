@@ -66,9 +66,7 @@ def fetch_apartments(offset, limit, data):
             if 'views' in data['sort']:
                 result_query += ", views {}".format(data['sort']['views'])
 
-        result_query += """
-                    OFFSET {} LIMIT {}
-                """.format(offset, limit)
+        result_query += " OFFSET {} LIMIT {}".format(offset, limit)
 
         curr.execute(result_query)
         records = curr.fetchall()
