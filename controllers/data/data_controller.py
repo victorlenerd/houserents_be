@@ -13,7 +13,7 @@ def populate_db(data):
     conn = DBConnector.instance.db_context
 
     with conn.cursor() as curr:
-        curr.execute("TRUNCATE models.py;")
+        curr.execute("TRUNCATE apartments")
 
         for apartment in data:
             date_added = apartment['date_added'].split('T')[0]
@@ -25,7 +25,7 @@ def populate_db(data):
             lat_lng = 'POINT({lat} {lng})'.format(lat=apartment['lat'], lng=apartment['lng'])
             curr.execute(
                 """
-                    INSERT INTO models.py (latLng, no_bed, no_bath, no_toilets, price, url, source, address, description, date_added)
+                    INSERT INTO apartments (latLng, no_bed, no_bath, no_toilets, price, url, source, address, description, date_added)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
                 """,
                 (
@@ -48,6 +48,7 @@ def populate_db(data):
 def clean_data():
 
     df = pd.read_json('./data.json')
+
     df['no_toilets'] = df['no_toilets'].astype('int32')
     df['no_bath'] = df['no_toilets'].astype('int32')
     df['no_bed'] = df['no_toilets'].astype('int32')
@@ -55,11 +56,17 @@ def clean_data():
     df['source'] = df['source'].astype('str')
     df['address'] = df['address'].astype('str')
     df['description'] = df['description'].astype('str')
+
     df = df[(df['no_bed'] >= 1) & (df['no_toilets'] >= 1) & (df['no_bath'] >= 1)]
     df = df[(df['no_bed'] <= 10) & (df['no_bath'] <= 10) & (df['no_toilets'] <= 10)]
+    df = df[df['description'] != ""]
+    df = df[df['address'] != ""]
+    df = df[df['price'] >= 10000]
+
     df = df[np.isfinite(df['lat'])]
     df = df[np.isfinite(df['lng'])]
-    df = df.drop_duplicates()
+
+    df = df.drop_duplicates(subset=['lat', 'lng', 'price'], keep='first')
 
     return populate_db(df.to_dict(orient="records"))
 

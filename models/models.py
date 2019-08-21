@@ -18,32 +18,17 @@ DB_PASSWORD = os.environ["DB_PASSWORD"]
 DB_PORT = os.environ["DB_PORT"]
 PORT = os.environ["PORT"]
 
-
-def load_spatialite(dbapi_conn, connection_record):
-    dbapi_conn.enable_load_extension(True)
-    dbapi_conn.load_extension('/usr/lib/x86_64-linux-gnu/mod_spatialite.so')
-
 logging.basicConfig()
 logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
-
 Base = declarative_base()
 Session = sessionmaker()
+
 engine = create_engine('postgresql://{}:{}@{}:{}/{}'.format(DB_USER, DB_PASSWORD, HOST, DB_PORT, DB_NAME))
-
-# session.execute(select([func.InitSpatialMetaData()]))
-
-Base.metadata.create_all(engine)
-
-Session.configure(bind=engine)
-
-listen(engine, 'connect', load_spatialite)
-
-session = Session()
 
 class Apartment(Base):
 
-    __tablename__ = 'apartments'
+    __tablename__ = 'listings'
 
     id = Column(UUID, primary_key=True, default=uuid4)
     no_bed = Column(Integer)
@@ -55,4 +40,8 @@ class Apartment(Base):
     description = Column(String)
     source = Column(String)
     date_added = Column(Date)
-    latLng = Column(Geography(geometry_type='POINT', srid=4326, ))
+    latlng = Column(Geography(geometry_type='POINT', srid=4326))
+
+
+if not engine.dialect.has_table(engine, 'listings'):
+    Apartment.__table__.create(engine)

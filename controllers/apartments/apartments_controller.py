@@ -74,4 +74,4 @@ def fetch_apartments(offset, limit, data):
         curr.execute(query_result_count)
         count = curr.fetchone()['count']
 
-    return jsonify({ "data": records, "total": count })
+    return jsonify({"data": records, "total": count})
