@@ -8,8 +8,6 @@ from geoalchemy2.types import Geography
 from sqlalchemy import Column, Integer, Float, String, Date
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.event import listen
-from sqlalchemy.sql import select, func
 
 HOST = os.environ["DB_HOST"]
 DB_NAME = os.environ["DB_NAME"]

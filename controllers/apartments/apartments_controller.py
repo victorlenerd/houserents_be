@@ -7,8 +7,6 @@ def fetch_apartments(offset, limit, data):
 
     conn = DBConnector.instance.db_context
 
-    no_toilets = data['specs']['no_toilets']
-    no_bath = data['specs']['no_bath']
     no_bed = data['specs']['no_bed']
 
     lat = data['location']['lat']
@@ -18,60 +16,64 @@ def fetch_apartments(offset, limit, data):
 
     with conn.cursor(cursor_factory=RealDictCursor) as curr:
 
+        result_query_params = [no_bed, lat_lng_point]
+        count_query_params = [no_bed, lat_lng_point]
+
         result_query = """
                     SELECT address, no_bath, no_bed, no_toilets, price, source, url, views, 
                         description, date_added, ST_AsText(latlng) as latlng 
                     FROM apartments 
-                    WHERE no_bed = {}
-                    AND no_bath = {}
-                    AND no_toilets = {}
-                    AND st_dwithin(latLng, st_geomfromtext(\'{}\'), 5000)
-                """.format(no_bed, no_bath, no_toilets, lat_lng_point)
+                    WHERE no_bed = %s
+                    AND st_dwithin(latLng, st_geomfromtext(%s), 5000)
+                """
 
         query_result_count = """
                 SELECT COUNT(id)
                 FROM apartments 
-                WHERE no_bed = {} AND no_bath = {} AND no_toilets = {}
-                AND st_dwithin(latLng, st_geomfromtext(\'{}\'), 5000)
-            """.format(no_bed, no_bath, no_toilets, lat_lng_point)
+                WHERE no_bed = %s
+                AND st_dwithin(latLng, st_geomfromtext(%s), 5000)
+            """
 
         if 'filter' in data:
 
-            if 'price_max' in data['filter']:
-                max_filter = """
-                            AND price <= {}
-                        """.format(data['filter']['price_max'])
+            if 'max_price' in data['filter']:
+                max_filter = "AND price <= %s"
 
                 result_query += max_filter
                 query_result_count += max_filter
 
-            if 'price_min' in data['filter']:
-                min_filter = """
-                            AND price >= {}
-                        """.format(data['filter']['price_min'])
+                result_query_params.append(data['filter']['max_price'])
+                count_query_params.append(data['filter']['max_price'])
+
+            if 'min_price' in data['filter']:
+                min_filter = "AND price >= %s"
 
                 result_query += min_filter
-                query_result_count += max_filter
+                query_result_count += min_filter
 
-        result_query += "ORDER BY date_added DESC"
+                result_query_params.append(data['filter']['min_price'])
+                count_query_params.append(data['filter']['min_price'])
 
-        if 'sort' in data:
+        if 'sort' in data and data['sort'] == 'recent':
+            result_query += " ORDER BY date_added DESC"
+        elif 'sort' in data and data['sort'] == 'price':
+            result_query += " ORDER BY price DESC"
 
-            if 'price' in data['sort']:
-                result_query += ", price {}".format(data['sort']['price'])
+        if limit != 'all':
+            result_query += " OFFSET %s "
+            result_query_params.append(offset)
 
-            if 'latLng' in data['sort']:
-                result_query += ", latLng {}".format(data['sort']['latLng'])
+            result_query += "LIMIT %s"
+            result_query_params.append(limit)
 
-            if 'views' in data['sort']:
-                result_query += ", views {}".format(data['sort']['views'])
+        print(result_query, result_query_params)
 
-        result_query += " OFFSET {} LIMIT {}".format(offset, limit)
-
-        curr.execute(result_query)
+        curr.execute(result_query, result_query_params)
         records = curr.fetchall()
 
-        curr.execute(query_result_count)
+        curr.execute(query_result_count, count_query_params)
         count = curr.fetchone()['count']
 
     return jsonify({"data": records, "total": count})
+
+
