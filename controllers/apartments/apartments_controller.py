@@ -36,7 +36,7 @@ def fetch_apartments(offset, limit, data):
 
         if 'filter' in data:
 
-            if 'max_price' in data['filter']:
+            if 'max_price' in data['filter'] and data['filter']['max_price'] > 0:
                 max_filter = "AND price <= %s"
 
                 result_query += max_filter
@@ -45,7 +45,7 @@ def fetch_apartments(offset, limit, data):
                 result_query_params.append(data['filter']['max_price'])
                 count_query_params.append(data['filter']['max_price'])
 
-            if 'min_price' in data['filter']:
+            if 'min_price' in data['filter'] and data['filter']['min_price'] > 0:
                 min_filter = "AND price >= %s"
 
                 result_query += min_filter
