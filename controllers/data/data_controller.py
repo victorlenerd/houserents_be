@@ -74,7 +74,7 @@ def clean_data():
 def download_data():
 
     url = '{}/data/data.json'.format(os.environ["DATA_SERVER"])
-
+   
     with open('./data.json', 'w', encoding='utf-8') as dataFile:
         r = requests.get(url)
         dataFile.write(json.dumps(r.json()))
