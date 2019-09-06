@@ -1,12 +1,10 @@
 from flask import jsonify
 import numpy as np
 import os
-from db.connect import DBConnector
-from redis.redis import RedisConnector
 
 import psycopg2
 
-HOST = os.environ["DB_HOST"]
+DB_HOST = os.environ["DB_HOST"]
 DB_NAME = os.environ["DB_NAME"]
 DB_USER = os.environ["DB_USER"]
 DB_PASSWORD = os.environ["DB_PASSWORD"]
@@ -28,7 +26,7 @@ def compute_median(record):
 
 def predict(data):
 
-    conn = psycopg2.connect(host=host, database=db_name, user=db_user, password=db_password, port=db_port)
+    conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASSWORD, port=DB_PORT)
 
     results = {
         "prices": []

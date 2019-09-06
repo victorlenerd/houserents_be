@@ -3,7 +3,6 @@ import os
 
 root_dir = os.path.dirname(__file__)
 
-
 class DBConnector:
 
     class __DBConnector:
