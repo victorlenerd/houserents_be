@@ -30,34 +30,37 @@ def compute_median(record):
 
 def predict(data):
 
-    no_bed = data['no_bed']
-
     results = {
         "prices": []
     }
 
-    r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD)
-    conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASSWORD, port=DB_PORT)
+    if 'no_bed' in data and 'locations' in data:
+        no_bed = data['no_bed']
+        locations = data['locations']
+        r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD)
+        conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASSWORD, port=DB_PORT)
 
-    with conn.cursor() as curr:
+        with conn.cursor() as curr:
 
-        for d in data['locations']:
+            for d in locations:
 
-            query_key = '{}:{}:{}'.format(d['lat'], d['lng'], no_bed)
-            loc_avg = r.get(query_key)
+                query_key = '{}:{}:{}'.format(d['lat'], d['lng'], no_bed)
+                loc_avg = r.get(query_key)
 
-            if loc_avg is None:
-                lat_lng_point = 'POINT({} {})'.format(d['lat'], d['lng'])
-                query = 'SELECT price FROM apartments WHERE st_dwithin(latLng, st_geomfromtext(\'{}\'), 5000) AND no_bed = {} ;'.format(lat_lng_point, no_bed)
+                if loc_avg is None:
+                    lat_lng_point = 'POINT({} {})'.format(d['lat'], d['lng'])
+                    query = 'SELECT price FROM apartments WHERE st_dwithin(latLng, st_geomfromtext(\'{}\'), 5000) AND no_bed = {} ;'.format(lat_lng_point, no_bed)
 
-                curr.execute(query)
-                record = curr.fetchall()
-                median = compute_median(record)
-                r.set(query_key, median, ex=1209600)
-                results["prices"].append(median)
-            else:
-                results["prices"].append(float(str(loc_avg.decode('utf-8'))))
+                    curr.execute(query)
+                    record = curr.fetchall()
+                    median = compute_median(record)
+                    r.set(query_key, median, ex=1209600)
+                    results["prices"].append(median)
+                else:
+                    results["prices"].append(float(str(loc_avg.decode('utf-8'))))
 
-    conn.close()
+        conn.close()
+    else:
+        return jsonify(results)
 
     return jsonify(results)
