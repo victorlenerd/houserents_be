@@ -24,6 +24,7 @@ Session = sessionmaker()
 
 engine = create_engine('postgresql://{}:{}@{}:{}/{}'.format(DB_USER, DB_PASSWORD, HOST, DB_PORT, DB_NAME))
 
+
 class Apartment(Base):
 
     __tablename__ = 'listings'

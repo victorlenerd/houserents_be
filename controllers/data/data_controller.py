@@ -1,16 +1,21 @@
+import os
+import json
+import psycopg2
 import datetime
 import numpy as np
 import pandas as pd
 import requests
-import os
-import json
 
-from db.connect import DBConnector
+DB_HOST = os.environ["DB_HOST"]
+DB_NAME = os.environ["DB_NAME"]
+DB_USER = os.environ["DB_USER"]
+DB_PASSWORD = os.environ["DB_PASSWORD"]
+DB_PORT = os.environ["DB_PORT"]
 
 
 def populate_db(data):
 
-    conn = DBConnector.instance.db_context
+    conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASSWORD, port=DB_PORT)
 
     with conn.cursor() as curr:
         curr.execute("TRUNCATE apartments")
@@ -40,7 +45,9 @@ def populate_db(data):
                     apartment['description'],
                     date
                 ))
+
         conn.commit()
+        conn.close()
 
     return "Thank you!"
 
@@ -74,10 +81,15 @@ def clean_data():
 def download_data():
 
     url = '{}/data/data.json'.format(os.environ["DATA_SERVER"])
-   
+
     with open('./data.json', 'w', encoding='utf-8') as dataFile:
         r = requests.get(url)
         dataFile.write(json.dumps(r.json()))
         dataFile.close()
 
     return clean_data()
+
+
+def data_ready():
+
+    print("Data Ready Called")

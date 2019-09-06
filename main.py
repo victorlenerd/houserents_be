@@ -1,21 +1,14 @@
+import os
+
 from flask import Flask, request
 from flask_cors import CORS
 from flask_request_params import bind_request_params
-from dotenv import load_dotenv
-import os
-
 from controllers.apartments import apartments_controller
 from controllers.data import data_controller
 from controllers.predict import predict_controller
+import psycopg2
 
-from db.connect import DBConnector
-
-root_dir = os.path.dirname(__file__)
-
-env_path = os.path.join(root_dir, '.env')
-load_dotenv(dotenv_path=env_path)
-
-HOST = os.environ["DB_HOST"]
+DB_HOST = os.environ["DB_HOST"]
 DB_NAME = os.environ["DB_NAME"]
 DB_USER = os.environ["DB_USER"]
 DB_PASSWORD = os.environ["DB_PASSWORD"]
@@ -23,11 +16,26 @@ DB_PORT = os.environ["DB_PORT"]
 PORT = os.environ["PORT"]
 DEBUG = os.environ["ENV"] == "DEV"
 
-DBConnector(host=HOST, db_name=DB_NAME, db_user=DB_USER, db_password=DB_PASSWORD, db_port=DB_PORT)
+REDIS_HOST = os.environ['REDIS_HOST']
+REDIS_PASSWORD = os.environ['REDIS_PASSWORD']
 
 app = Flask(__name__)
 CORS(app)
 app.before_request(bind_request_params)
+
+
+conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASSWORD, port=DB_PORT)
+
+root_dir = os.path.dirname(__file__)
+sql_file_path = os.path.join(root_dir, 'db/db.pgsql')
+
+with conn.cursor() as curr:
+    with open(sql_file_path, 'r') as pg_sql:
+        query = pg_sql.read().encode("utf8")
+        curr.execute(query)
+    conn.commit()
+
+conn.close()
 
 
 @app.route('/apartments', methods=['POST'])
