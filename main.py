@@ -16,9 +16,6 @@ DB_PORT = os.environ["DB_PORT"]
 PORT = os.environ["PORT"]
 DEBUG = os.environ["ENV"] == "DEV"
 
-REDIS_HOST = os.environ['REDIS_HOST']
-REDIS_PASSWORD = os.environ['REDIS_PASSWORD']
-
 app = Flask(__name__)
 CORS(app)
 app.before_request(bind_request_params)
