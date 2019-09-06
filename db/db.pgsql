@@ -42,3 +42,6 @@ CREATE TABLE IF NOT EXISTS roomies (
     no_bath INT NOT NULL,
     no_toilets INT NOT NULL
 );
+
+
+ALTER TABLE apartments ADD COLUMN IF NOT EXISTS views INT DEFAULT 0;

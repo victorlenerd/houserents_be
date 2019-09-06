@@ -1,16 +1,19 @@
 FROM python:3
 
-WORKDIR /home/houserents
+RUN mkdir -p /usr/src/hourserents
+WORKDIR /usr/src/hourserents
 
-COPY requirements.txt requirements.txt
+COPY requirements.txt /usr/src/hourserents/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-COPY controllers controllers
-COPY db db
-COPY main.py boot.sh ./
+COPY controllers /usr/src/hourserents/
+COPY db /usr/src/hourserents/
+COPY main.py boot.sh /usr/src/hourserents/
 RUN chmod +x boot.sh
 
 ENV FLASK_APP main.py
 
 EXPOSE 5000
+
+CMD python main.py
