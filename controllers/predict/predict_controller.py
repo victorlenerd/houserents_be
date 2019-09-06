@@ -37,7 +37,7 @@ def predict(data):
     if 'no_bed' in data and 'locations' in data:
         no_bed = data['no_bed']
         locations = data['locations']
-        r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD)
+        r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT)
         conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASSWORD, port=DB_PORT)
 
         with conn.cursor() as curr:
