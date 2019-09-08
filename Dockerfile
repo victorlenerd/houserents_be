@@ -31,6 +31,10 @@ ARG REDIS_HOST
 ARG REDIS_PORT
 ARG REDIS_PASSWORD
 
+RUN echo $DB_HOST
+
+RUN echo $DB_USER
+
 ENV FLASK_APP main.py
 RUN python -m unittest test_main.py
 
