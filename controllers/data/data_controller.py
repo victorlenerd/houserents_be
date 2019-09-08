@@ -60,6 +60,8 @@ def clean_data():
 
     df = pd.read_json('./data.json')
 
+    print(df.head())
+
     df['no_toilets'] = df['no_toilets'].astype('int32')
     df['no_bath'] = df['no_toilets'].astype('int32')
     df['no_bed'] = df['no_toilets'].astype('int32')
