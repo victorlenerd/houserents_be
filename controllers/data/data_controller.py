@@ -1,4 +1,3 @@
-import os
 import json
 import psycopg2
 import datetime
@@ -6,11 +5,16 @@ import numpy as np
 import pandas as pd
 import requests
 
-DB_HOST = os.environ["DB_HOST"]
-DB_NAME = os.environ["DB_NAME"]
-DB_USER = os.environ["DB_USER"]
-DB_PASSWORD = os.environ["DB_PASSWORD"]
-DB_PORT = os.environ["DB_PORT"]
+from misc.envs import get
+
+envs = get()
+
+DB_HOST = envs["DB_HOST"]
+DB_NAME = envs["DB_NAME"]
+DB_USER = envs["DB_USER"]
+DB_PASSWORD = envs["DB_PASSWORD"]
+DB_PORT = envs["DB_PORT"]
+DATA_SERVER = envs['DATA_SERVER']
 
 
 def populate_db(data):
@@ -80,7 +84,7 @@ def clean_data():
 
 def download_data():
 
-    url = '{}/data/data.json'.format(os.environ["DATA_SERVER"])
+    url = '{}/data/data.json'.format(DATA_SERVER)
 
     with open('./data.json', 'w', encoding='utf-8') as dataFile:
         r = requests.get(url)
@@ -89,7 +93,3 @@ def download_data():
 
     return clean_data()
 
-
-def data_ready():
-
-    print("Data Ready Called")

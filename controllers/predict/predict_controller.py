@@ -1,18 +1,20 @@
-from flask import jsonify
 import numpy as np
-import os
 import redis
 import psycopg2
 
-DB_HOST = os.environ["DB_HOST"]
-DB_NAME = os.environ["DB_NAME"]
-DB_USER = os.environ["DB_USER"]
-DB_PASSWORD = os.environ["DB_PASSWORD"]
-DB_PORT = os.environ["DB_PORT"]
+from flask import jsonify
+from misc.envs import get
 
-REDIS_HOST = os.environ['REDIS_HOST']
-REDIS_PORT = os.environ['REDIS_PORT']
-REDIS_PASSWORD = os.environ['REDIS_PASSWORD']
+envs = get()
+
+DB_HOST = envs["DB_HOST"]
+DB_NAME = envs["DB_NAME"]
+DB_USER = envs["DB_USER"]
+DB_PASSWORD = envs["DB_PASSWORD"]
+DB_PORT = envs["DB_PORT"]
+
+REDIS_HOST = envs['REDIS_HOST']
+REDIS_PORT = envs['REDIS_PORT']
 
 
 def compute_median(record):
@@ -35,8 +37,10 @@ def predict(data):
     }
 
     if 'no_bed' in data and 'locations' in data:
+        
         no_bed = data['no_bed']
         locations = data['locations']
+
         r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT)
         conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASSWORD, port=DB_PORT)
 
