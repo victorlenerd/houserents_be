@@ -44,9 +44,9 @@ def predict():
     return predict_controller.predict(request.get_json())
 
 
-@app.route('/data', methods=['GET'])
-def download_data():
-    return data_controller.download_data()
+@app.route('/data/<data_file_name>', methods=['GET'])
+def download_data(data_file_name):
+    return data_controller.download_data(data_file_name)
 
 
 if __name__ == '__main__':
