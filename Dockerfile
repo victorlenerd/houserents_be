@@ -1,6 +1,5 @@
 FROM python:3
 
-RUN aws configure
 RUN mkdir -p /usr/src/hourserents
 WORKDIR /usr/src/hourserents
 

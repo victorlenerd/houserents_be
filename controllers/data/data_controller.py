@@ -1,9 +1,11 @@
 import os
 import psycopg2
+import requests
+import json
 import datetime
 import numpy as np
 import pandas as pd
-import boto3
+
 
 from misc.envs import get
 
@@ -87,12 +89,13 @@ def clean_data():
 
 
 def download_data(data_file_name):
-    s3 = boto3.client('s3')
 
     print("Fetching file", data_file_name)
+    url = "https://houserents-data.s3.us-east-2.amazonaws.com/" + data_file_name
 
-    with open('./data.json', 'wb') as dataFile:
-        s3.download_fileobj('houserents-data', data_file_name, dataFile)
+    with open('./data.json', 'w', encoding='utf-8') as dataFile:
+        r = requests.get(url)
+        dataFile.write(json.dumps(r.json()))
         dataFile.close()
 
     return clean_data()
