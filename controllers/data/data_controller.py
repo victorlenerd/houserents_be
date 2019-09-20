@@ -1,3 +1,4 @@
+import os
 import psycopg2
 import datetime
 import numpy as np
@@ -52,6 +53,8 @@ def populate_db(data):
         conn.commit()
         conn.close()
 
+    os.remove('./data.json')
+
     return "Thank you!"
 
 
@@ -85,6 +88,8 @@ def clean_data():
 
 def download_data(data_file_name):
     s3 = boto3.client('s3')
+
+    print("Fetching file", data_file_name)
 
     with open('./data.json', 'wb') as dataFile:
         s3.download_fileobj('houserents-data', data_file_name, dataFile)

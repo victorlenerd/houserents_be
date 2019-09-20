@@ -20,10 +20,6 @@ class MainTest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_upload_data_status_code(self) -> None:
-        result = self.app.get('/data')
-        self.assertEqual(result.status_code, 200)
-
     def test_predict_status_code(self) -> None:
         result = self.app.post('/predict', data=json.dumps(dict(
                 data=dict(
