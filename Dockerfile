@@ -3,7 +3,6 @@ FROM python:3
 RUN mkdir -p /usr/src/hourserents
 WORKDIR /usr/src/hourserents
 
-COPY .aws /usr/src/hourserents/.aws
 COPY data.json /usr/src/hourserents/
 COPY requirements-prod.txt /usr/src/hourserents/
 COPY numpy-1.16.1-cp37-cp37m-manylinux1_x86_64.whl /usr/src/hourserents/
