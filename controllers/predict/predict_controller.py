@@ -15,6 +15,7 @@ DB_PORT = envs["DB_PORT"]
 
 REDIS_HOST = envs['REDIS_HOST']
 REDIS_PORT = envs['REDIS_PORT']
+REDIS_PASSWORD = envs['REDIS_PASSWORD']
 
 
 def compute_median(record):
@@ -37,11 +38,11 @@ def predict(data):
     }
 
     if 'no_bed' in data and 'locations' in data:
-        
+
         no_bed = data['no_bed']
         locations = data['locations']
 
-        r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT)
+        r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD)
         conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASSWORD, port=DB_PORT)
 
         with conn.cursor() as curr:
