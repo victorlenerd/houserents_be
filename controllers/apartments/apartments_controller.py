@@ -12,6 +12,7 @@ DB_USER = envs["DB_USER"]
 DB_PASSWORD = envs["DB_PASSWORD"]
 DB_PORT = envs["DB_PORT"]
 
+
 def fetch_apartments(offset, limit, data):
 
     conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASSWORD, port=DB_PORT)

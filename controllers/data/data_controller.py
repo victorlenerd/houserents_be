@@ -5,7 +5,7 @@ import json
 import datetime
 import numpy as np
 import pandas as pd
-
+import boto3
 
 from misc.envs import get
 
@@ -17,7 +17,8 @@ DB_USER = envs["DB_USER"]
 DB_PASSWORD = envs["DB_PASSWORD"]
 DB_PORT = envs["DB_PORT"]
 DATA_SERVER = envs['DATA_SERVER']
-
+API_KEY = envs['API_KEY']
+API_SECRET = envs['API_SECRET']
 
 def populate_db(data):
 
@@ -90,12 +91,16 @@ def clean_data():
 
 def download_data(data_file_name):
 
+    s3 = boto3.client('s3',
+            aws_access_key_id=API_KEY,
+            aws_secret_access_key=API_SECRET,
+         )
+
     print("Fetching file", data_file_name)
     url = "https://houserents-data.s3.us-east-2.amazonaws.com/" + data_file_name
 
-    with open('./data.json', 'w', encoding='utf-8') as dataFile:
-        r = requests.get(url)
-        dataFile.write(json.dumps(r.json()))
+    with open('./data.json', 'wb') as dataFile:
+        s3.download_fileobj('houserents-data', data_file_name, dataFile)
         dataFile.close()
 
     return clean_data()
