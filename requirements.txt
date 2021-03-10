@@ -1,6 +1,6 @@
 Flask==0.12.2
 gunicorn==19.8.1
-Werkzeug==0.12.2
+Werkzeug==0.15.3
 psycopg2-binary==2.7.7
 python-dotenv==0.10.1
 cython==0.29.6
