@@ -5,7 +5,7 @@ psycopg2-binary==2.7.7
 python-dotenv==0.10.1
 cython==0.29.6
 pandas==0.23.0
-numpy==1.16.1
+numpy==1.22.0
 requests2==2.16.0
 flask-request-params==0.3.0
 flask-cors==3.0.7
